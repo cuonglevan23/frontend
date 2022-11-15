@@ -117,7 +117,7 @@ const Home = () => {
                       nhau.
                     </p>
                   </div>
-                  <div className="img-area">
+                  <div className="img-area2">
                     <p className="hover-image" />
                   </div>
                 </div>
@@ -136,7 +136,7 @@ const Home = () => {
                       hạn chế sản phẩm nhựa sử dụng một lần.
                     </p>
                   </div>
-                  <div className="img-area">
+                  <div className="img-area1">
                     <p className="hover-image" />
                   </div>
                 </div>

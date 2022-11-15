@@ -19,8 +19,8 @@ const RedeemPoints = () => {
                     <div className="box-content-text">
                         <div className="container">
                             <div className="content-text">
-                                <p className="txt-text">Chương trình Việt Nam Tái Chế triển khai hoạt động Tích Điểm – Nhận Quà (Trao đi thiết bị hỏng – Nhận lại quà tặng xanh) nhằm khuyến khích người dân nâng cao ý thức và chủ động hơn trong việc thải bỏ rác thải điện điện tử đúng cách, an toàn. Các thiết bị điện tử trước đây vốn được người dân quen bán đồng nát hay vứt chung với rác sinh hoạt thì bây giờ có thể thông qua chương trình được xử lý một cách an toàn, chuyên nghiệp, bên cạnh đó người tham gia còn có thể tích điểm mỗi lần bỏ rác điện tử và nhận lại các phần quà thân thiện với môi trường.</p>
-                                <p className="txt-text">Bắt đầu từ ngày 10 tháng 5 năm 2022 khi mang rác thải điện tử đến các điểm thu hồi của Việt Nam Tái Chế, người dân có thể dùng điện thoại thông minh quét mã QR được in trên thùng chứa rác thải điện tử và điền form đăng ký theo hướng dẫn để tham gia tích điểm. Sau khi tích đủ điểm mọi người có thể liên hệ Việt Nam Tái Chế để quy đổi thành các phần quà xanh tương ứng. Chương trình Tích Điểm – Nhận Quà sẽ được diễn ra liên tục cho đến khi có thông báo mới.</p>
+                                <p className="txt-text">Chương trình Việt Nam Tái Chế triển khai hoạt động Tích Điểm – Nhận Quà (Trao đi thiết bị hỏng – Nhận lại quà tặng xanh) nhằm khuyến khích người dân nâng cao ý thức và chủ động hơn trong việc thải bỏ rác thải nhựa đúng cách, an toàn. Các thiết bị điện tử trước đây vốn được người dân quen bán đồng nát hay vứt chung với rác sinh hoạt thì bây giờ có thể thông qua chương trình được xử lý một cách an toàn, chuyên nghiệp, bên cạnh đó người tham gia còn có thể tích điểm mỗi lần bỏ rác nhựa và nhận lại các phần quà thân thiện với môi trường.</p>
+                                <p className="txt-text">Bắt đầu từ ngày 10 tháng 5 năm 2022 khi mang rác thải nhựa đến các điểm thu hồi của Việt Nam Tái Chế, người dân có thể dùng điện thoại thông minh quét mã QR được in trên thùng chứa rác thải nhựa và điền form đăng ký theo hướng dẫn để tham gia tích điểm. Sau khi tích đủ điểm mọi người có thể liên hệ Việt Nam Tái Chế để quy đổi thành các phần quà xanh tương ứng. Chương trình Tích Điểm – Nhận Quà sẽ được diễn ra liên tục cho đến khi có thông báo mới.</p>
                             </div>
                             <div className="box-exchange">
                                 <div className="box-image-exchange" />
@@ -41,7 +41,7 @@ const RedeemPoints = () => {
                     </div>
                     <div className="box-category-collection">
                         <div className="container">
-                            <h3 className="txt-tile">Danh mục thu gom rác thải điện tử</h3>
+                            <h3 className="txt-tile">Danh mục thu gom rác thải nhựa</h3>
                             <div className="box-category-collection-img" />
                             <p className="txt-text"><i className="fa fa-exclamation-triangle" aria-hidden="true" /> <strong>Lưu ý:</strong> Hãy chắc chắn rằng tất cả loại tài sản cá nhân, bao gồm dữ liệu, đã được xóa khỏi thiết bị khi bạn mang đi thải bỏ. Rất tiếc hiện tại chúng tôi không nhận hoàn trả lại thiết bị cũng như không hỗ trợ việc bảo mật dữ liệu kèm theo.</p>
                             <p className="txt-text text-condition txt-color-bule">Xin vui lòng đọc kỹ Điều khoản và Điều kiện của chúng tôi <i className="fa fa-external-link" /></p>
@@ -49,7 +49,7 @@ const RedeemPoints = () => {
                     </div>
                     <div className="box-content">
                         <div className="container">
-                            <h3 className="txt-tile">Địa chỉ thu hồi rác thải điện tử có tích điểm</h3>
+                            <h3 className="txt-tile">Địa chỉ thu hồi rác thải nhựa có tích điểm</h3>
                             <p className="txt-text txt-address">Các bạn có thể mang thiết bị cũ ở nhà mình đến những địa điểm cụ thể sau để tích điểm và nhận quà nhé:</p>
                             <div className="list-address">
                                 <div className="row">
