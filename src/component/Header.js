@@ -17,7 +17,7 @@ const Header = () => {
               id="navbarNav"
             >
               <ul className="navbar-nav">
-                <li className="nav-item active">
+                <li className="nav-item ">
                   <Link className="nav-link" to="/">
                     TRANG CHỦ
                   </Link>
@@ -126,13 +126,13 @@ const Header = () => {
                     <div className="justify-content-md-center">
                       <ul className="navbar-nav lst-items-mobile">
                         <li className="nav-item">
-                          <a className="nav-link" href="index.html">
+                          <a className="nav-link" href="/">
                             TRANG CHỦ
                           </a>
                         </li>
                         <li className="nav-item">
-                          <a className="nav-link" href="Product.html">
-                            BỘ SƯU TẬP
+                          <a className="nav-link" href="/">
+                            LIÊN HỆ
                           </a>
                         </li>
                         <li className="nav-item dropdown">
@@ -145,7 +145,7 @@ const Header = () => {
                             aria-haspopup="true"
                             aria-expanded="false"
                           >
-                            Sản phẩm
+                          TÍCH ĐIỂM - ĐỔI THƯỞNG
                           </a>
                           <div
                             className="dropdown-menu"
@@ -157,37 +157,37 @@ const Header = () => {
                               href="detailproduct.html"
                               title="Sản phẩm - Style 1"
                             >
-                              Sản phẩm - Style 1
+                            ĐỔI ĐIỂM RECYCLABLE WASTE
                             </a>
                             <a
                               className="dropdown-item"
-                              href="detailproduct.html"
-                              title="Sản phẩm - Style 2"
+                              href="/"
+                            
                             >
-                              Sản phẩm - Style 2
+                             CÁCH THỨC ĐỔI ĐIỂM
                             </a>
                             <a
                               className="dropdown-item"
-                              href="detailproduct.html"
-                              title="Sản phẩm - Style 3"
+                              href="/"
+                          
                             >
-                              Sản phẩm - Style 3
+                              ĐỊA ĐIỂM ĐỔI ĐIỂM
                             </a>
                           </div>
                         </li>
-                        <li className="nav-item">
+                        {/* <li className="nav-item">
                           <a className="nav-link" href="introduce.html">
-                            GIỚI THIỆU
+                            LIÊN HỆ
                           </a>
-                        </li>
-                        <li className="nav-item">
+                        </li> */}
+                        {/* <li className="nav-item">
                           <a className="nav-link" href="blog.html">
                             BLOG
                           </a>
-                        </li>
+                        </li> */}
                         <li className="nav-item">
-                          <a className="nav-link" href="Contact.html">
-                            LIÊN HỆ
+                          <a className="nav-link" href="/">
+                           SẢN PHẨM
                           </a>
                         </li>
                       </ul>

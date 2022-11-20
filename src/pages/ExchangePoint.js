@@ -1,9 +1,11 @@
 import { useState } from "react";
 import OutLineBg from "../OutLineBg";
 
+
 const ExchangePoint = () => {
     const [active, setActive] = useState('steps-custom__item active');
 
+    
     return (
         <>
             <OutLineBg>
@@ -507,37 +509,38 @@ const ExchangePoint = () => {
                             <h2 className="section-title">Các đối tác của RECYCLABLE WASTE</h2>
                             <div className="partners-viettel__content">
                                 <div className="partners-viettel__detail">
+
                                     <div className="lists-slider slider">
-                                        <ul className="partners-viettel__list owl-carousel">
-                                            <li className="partners-viettel__item">
-                                                <div className="partners-viettel__thumb"><img src="./img/doidiem/vin-mec.jpg" alt="img" /></div>
+                                        <ul class="partners-viettel__list owl-carousel">
+                                            <li class="partners-viettel__item">
+                                                <div class="partners-viettel__thumb"><img src="https://quanlydoitac.viettel.vn/files/qldt/public/partner/logo/2022/4/14/a9c7b828-648d-421f-aed6-2a3d3eae35ef.jpg" alt="img" /></div>
                                             </li>
-                                            <li className="partners-viettel__item">
-                                                <div className="partners-viettel__thumb"><img src="./img/doidiem/banboo.jpg" alt="img" /></div>
+                                            <li class="partners-viettel__item">
+                                                <div class="partners-viettel__thumb"><img src="https://quanlydoitac.viettel.vn/files/qldt/legacy/7dedb40f-f669-4ed3-814a-7ea2c757bc9c.jpg" alt="img" /></div>
                                             </li>
-                                            <li className="partners-viettel__item">
-                                                <div className="partners-viettel__thumb"><img src="./img/doidiem/nem.jpg" alt="img" /></div>
+                                            <li class="partners-viettel__item">
+                                                <div class="partners-viettel__thumb"><img src="https://quanlydoitac.viettel.vn/files/qldt/legacy/e2414d93-a8c5-4ac2-b3c2-59e1908642e1.jpg" alt="img" /></div>
                                             </li>
-                                            <li className="partners-viettel__item">
-                                                <div className="partners-viettel__thumb"><img src="./img/doidiem/lazada.jpg" alt="img" /></div>
+                                            <li class="partners-viettel__item">
+                                                <div class="partners-viettel__thumb"><img src="https://quanlydoitac.viettel.vn/files/qldt/public/partner/logo/2020/9/15/bcc79fda-bdde-40dc-b99c-e3bbf2d841dd.jpg" alt="img" /></div>
                                             </li>
-                                            <li className="partners-viettel__item">
-                                                <div className="partners-viettel__thumb"><img src="~/web/img/doidiem/aristino.jpg" alt="img" /></div>
+                                            <li class="partners-viettel__item">
+                                                <div class="partners-viettel__thumb"><img src="https://quanlydoitac.viettel.vn/files/qldt/public/partner/logo/2021/11/24/2d07f787-ec88-4b74-b15b-f00c10ed4537.jpg" alt="img" /></div>
                                             </li>
-                                            <li className="partners-viettel__item">
-                                                <div className="partners-viettel__thumb"><img src="./img/doidiem/vin-mec.jpg" alt="img" /></div>
+                                            <li class="partners-viettel__item">
+                                                <div class="partners-viettel__thumb"><img src="https://quanlydoitac.viettel.vn/files/qldt/public/partner/logo/2022/4/14/a9c7b828-648d-421f-aed6-2a3d3eae35ef.jpg" alt="img" /></div>
                                             </li>
-                                            <li className="partners-viettel__item">
-                                                <div className="partners-viettel__thumb"><img src="./img/doidiem/banboo.jpg" alt="img" /></div>
+                                            <li class="partners-viettel__item">
+                                                <div class="partners-viettel__thumb"><img src="https://quanlydoitac.viettel.vn/files/qldt/legacy/7dedb40f-f669-4ed3-814a-7ea2c757bc9c.jpg" alt="img" /></div>
                                             </li>
-                                            <li className="partners-viettel__item">
-                                                <div className="partners-viettel__thumb"><img src="./img/doidiem/nem.jpg" alt="img" /></div>
+                                            <li class="partners-viettel__item">
+                                                <div class="partners-viettel__thumb"><img src="https://quanlydoitac.viettel.vn/files/qldt/legacy/e2414d93-a8c5-4ac2-b3c2-59e1908642e1.jpg" alt="img" /></div>
                                             </li>
-                                            <li className="partners-viettel__item">
-                                                <div className="partners-viettel__thumb"><img src="./img/doidiem/lazada.jpg" alt="img" /></div>
+                                            <li class="partners-viettel__item">
+                                                <div class="partners-viettel__thumb"><img src="https://quanlydoitac.viettel.vn/files/qldt/public/partner/logo/2020/9/15/bcc79fda-bdde-40dc-b99c-e3bbf2d841dd.jpg" alt="img" /></div>
                                             </li>
-                                            <li className="partners-viettel__item">
-                                                <div className="partners-viettel__thumb"><img src="./img/doidiem/aristino.jpg" alt="img" /></div>
+                                            <li class="partners-viettel__item">
+                                                <div class="partners-viettel__thumb"><img src="https://quanlydoitac.viettel.vn/files/qldt/public/partner/logo/2021/11/24/2d07f787-ec88-4b74-b15b-f00c10ed4537.jpg" alt="img" /></div>
                                             </li>
                                         </ul>
                                     </div>
@@ -646,3 +649,4 @@ const ExchangePoint = () => {
 }
 
 export default ExchangePoint;
+
