@@ -10,6 +10,7 @@ import ExchangePoint from "./pages/ExchangePoint";
 import Product from "./pages/Product";
 import TelecomOffersDetail from "./pages/TelecomOffersDetail";
 import Login from "./pages/Login";
+import Pointdetail from "./pages/Point-detail";
 export default function Router() {
   return useRoutes([
     {
@@ -49,6 +50,10 @@ export default function Router() {
     {
       path: "/uu-dai-vien-thong",
       element: <TelecomOffersDetail />
+    },
+    {
+      path: "/chi-tiet-doi-diem",
+      element: <Pointdetail />
     },
     { path: "*", element: <Navigate to="/404" replace /> },
   ]);

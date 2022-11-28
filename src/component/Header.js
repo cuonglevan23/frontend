@@ -3,10 +3,40 @@ import { useState } from "react";
 
 const Header = () => {
   return (
-    <><div className="header">
-      <a style={{ color: '#ffffff', textDecoration: 'none' }} href="/">MIỄN PHÍ VẬN CHUYỂN VỚI ĐƠN HÀNG NỘI THÀNH &gt; 300K
-        - ĐỔI TRẢ TRONG 30 NGÀY - ĐẢM BẢO CHẤT LƯỢNG</a>
-    </div><nav className="navbar box-menu navbar-expand-md navbar-light bg-light sticky-top">
+    <>
+
+      <div className="header"><div className="header__top">
+        <div className="container-fluid">
+          <div className="row">
+            <div className="col-lg-6 col-md-8 col-sm-6 col-xs-12 ">
+              <p>470 Đường Trần Đại Nghĩa, Hoà Hải, Ngũ Hành Sơn, Đà Nẵng  -  Hotline: 097-821-3022</p>
+            </div>
+            <div className="col-lg-6 col-md-4 col-sm-6 col-xs-12 ">
+              <div className="header__actions">
+                <div className="btn-group ps-dropdown"><a className="dropdown-toggle" href="#" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">VNĐ<i className="fa fa-angle-down" /></a>
+                  <ul className="dropdown-menu">
+                    <li><a href="#"><img src="" alt /> VND</a></li>
+                    <li><a href="#"><img src="" alt /> SGD</a></li>
+                    <li><a href="#"><img src="" alt /> JPN</a></li>
+                  </ul>
+                </div>
+                <div className="btn-group ps-dropdown"><a className="dropdown-toggle" href="#" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Ngôn Ngữ<i className="fa fa-angle-down" /></a>
+                  <ul className="dropdown-menu">
+                    <li><a href="#">Vietnamese</a></li>
+                    <li><a href="#">Japanese</a></li>
+                    <li><a href="#">Chinese</a></li>
+                  </ul>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div></div>
+
+
+
+
+      <nav className="navbar box-menu navbar-expand-md navbar-light bg-light sticky-top">
         <div className="container">
           <div className="container-fluid box-head">
             <a className="navbar-branch logo" href="/">
@@ -145,7 +175,7 @@ const Header = () => {
                             aria-haspopup="true"
                             aria-expanded="false"
                           >
-                          TÍCH ĐIỂM - ĐỔI THƯỞNG
+                            TÍCH ĐIỂM - ĐỔI THƯỞNG
                           </a>
                           <div
                             className="dropdown-menu"
@@ -157,19 +187,19 @@ const Header = () => {
                               href="detailproduct.html"
                               title="Sản phẩm - Style 1"
                             >
-                            ĐỔI ĐIỂM RECYCLABLE WASTE
+                              ĐỔI ĐIỂM RECYCLABLE WASTE
                             </a>
                             <a
                               className="dropdown-item"
                               href="/"
-                            
+
                             >
-                             CÁCH THỨC ĐỔI ĐIỂM
+                              CÁCH THỨC ĐỔI ĐIỂM
                             </a>
                             <a
                               className="dropdown-item"
                               href="/"
-                          
+
                             >
                               ĐỊA ĐIỂM ĐỔI ĐIỂM
                             </a>
@@ -187,7 +217,7 @@ const Header = () => {
                         </li> */}
                         <li className="nav-item">
                           <a className="nav-link" href="/">
-                           SẢN PHẨM
+                            SẢN PHẨM
                           </a>
                         </li>
                       </ul>
