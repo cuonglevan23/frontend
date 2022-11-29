@@ -11,6 +11,11 @@ import Product from "./pages/Product";
 import TelecomOffersDetail from "./pages/TelecomOffersDetail";
 import Login from "./pages/Login";
 import Pointdetail from "./pages/Point-detail";
+import Productdetail from "./pages/Product-detail";
+import Userprofile from "./pages/Userprofile";
+import Cart from "./pages/Cart";
+import Checkout from "./pages/CheckOut";
+
 export default function Router() {
   return useRoutes([
     {
@@ -55,6 +60,23 @@ export default function Router() {
       path: "/chi-tiet-doi-diem",
       element: <Pointdetail />
     },
+    {
+      path: "/chi-tiet-san-pham",
+      element: <Productdetail />
+    },
+    {
+      path: "/nguoi-dung",
+      element: <Userprofile />
+    },
+    {
+      path: "/gio-hang",
+      element: <Cart />
+    },
+    {
+      path: "/dat-hang",
+      element: <Checkout />
+    },
+
     { path: "*", element: <Navigate to="/404" replace /> },
   ]);
 }

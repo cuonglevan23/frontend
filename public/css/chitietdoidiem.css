@@ -3909,9 +3909,7 @@ body {
     padding: 0;
 }
 
-.section {
-    margin: 0 0 60px;
-}
+
 
 @media (max-width: 991px) {
     .section {
