@@ -3,7 +3,7 @@
 }
 .navbar.box-menu{
    transition: 0.7s;
-   z-index: 9999;
+   z-index: 10;
    box-shadow: 0 5px 10px rgb(129 126 126 / 31%);
    margin-bottom: 0;
 }

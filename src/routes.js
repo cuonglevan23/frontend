@@ -5,7 +5,6 @@ import Introduction from "./pages/Introduction";
 import Contact from "./pages/Contact";
 import RedeemPoints from "./pages/RedeemPoints";
 import PoinAddress from "./pages/PointAddress";
-
 import ExchangePoint from "./pages/ExchangePoint";
 import Product from "./pages/Product";
 import TelecomOffersDetail from "./pages/TelecomOffersDetail";
@@ -15,6 +14,7 @@ import Productdetail from "./pages/Product-detail";
 import Userprofile from "./pages/Userprofile";
 import Cart from "./pages/Cart";
 import Checkout from "./pages/CheckOut";
+import Buyed from "./pages/Buyed";
 
 export default function Router() {
   return useRoutes([
@@ -65,12 +65,20 @@ export default function Router() {
       element: <Productdetail />
     },
     {
+      path: "/:id",
+      element: <Productdetail />
+    },
+    {
       path: "/nguoi-dung",
       element: <Userprofile />
     },
     {
       path: "/gio-hang",
       element: <Cart />
+    },
+    {
+      path: "/lich-su",
+      element: <Buyed />
     },
     {
       path: "/dat-hang",
