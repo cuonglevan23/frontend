@@ -4,8 +4,8 @@ import { Link, useParams } from "react-router-dom";
 import axios from "../lib/axios";
 import { ToastContainer, toast } from "react-toastify";
 
-const Productdetail = () => {
-  const { id } = useParams();
+const Productdetail = ({ id }) => {
+  // const { id } = useParams();
   const [quantity, setQuantity] = useState(1);
   const [product, setProduct] = useState();
   const handleGetProduct = async () => {
@@ -18,12 +18,13 @@ const Productdetail = () => {
 
   const handleAddToCart = async () => {
     const items = JSON.parse(localStorage.getItem("items"));
-  
+
     try {
       const res = await axios.post(`/order/create-order`, {
         idUser: items._id,
         idProduct: id,
         quantity,
+        byPoint: product.byPoint,
       });
       notifySuccess("Thêm sản phẩm vào giỏ hàng thành công");
     } catch (error) {
@@ -65,9 +66,9 @@ const Productdetail = () => {
                   <div className="ps-product__thumbnail">
                     <div className="ps-product__preview">
                       <div className="ps-product__variants">
-                        <div className="item">
+                        {/* <div className="item">
                           <img src={product?.imgProduct} alt />
-                        </div>
+                        </div> */}
                       </div>
                     </div>
                     <div className="ps-product__image">
@@ -118,7 +119,7 @@ const Productdetail = () => {
                     </div> */}
                     <h1> {product?.name}</h1>
                     {/* <p className="ps-product__category">(NHẬP KHẨU ĐỨC)</p> */}
-                    <h3 className="ps-product__price">{product?.price} ĐIỂM</h3>
+                    <h3 className="ps-product__price">{product?.price} ĐỒNG</h3>
                     <div className="ps-product__block ps-product__quickview">
                       <h4>Giới thiệu</h4>
                       <p>{product?.introduction}</p>

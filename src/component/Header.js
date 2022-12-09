@@ -1,10 +1,21 @@
-import { Link } from "react-router-dom";
-import { useState } from "react";
+import { Link, useNavigate } from "react-router-dom";
+import { useEffect, useState } from "react";
 
 const Header = () => {
+  const navigate = useNavigate();
+  const [items, setItems] = useState();
+  useEffect(() => {
+    const items = JSON.parse(localStorage.getItem("items"));
+    if (items) {
+      setItems(items);
+    }
+  }, []);
+  const hanldeSignOut = () => {
+    localStorage.removeItem("items");
+    // navigate("/dang-nhap")
+  };
   return (
     <>
-
       <nav className="navbar box-menu navbar-expand-md navbar-light bg-light sticky-top">
         <div className="container">
           <div className="container-fluid box-head">
@@ -65,9 +76,93 @@ const Header = () => {
               <Link to="/" className="icon-search">
                 <i className="fas fa-search" style={{ color: "#007a33" }} />
               </Link>
-              <Link style={{ color: "#007a33" }} to="/dang-nhap" className="login-out">
-                <i className="fas fa-user-alt" />
-              </Link>
+              {/* <Link style={{ color: "#007a33" }} to="/dang-nhap" className="login-out"> */}
+              <div
+                className="desk-menu collapse navbar-collapse justify-content-md-end"
+                id="navbarNav"
+              >
+                <ul className="navbar-nav">
+                  <li className="nav-item lisanpham">
+                    {items ? (
+                      <img
+                        src={items.avatar}
+                        style={{ width: 30, borderRadius: 50 }}
+                      />
+                    ) : (
+                      <i className="fas fa-user-alt" />
+                    )}
+                    <ul className="sub_menu" style={{ left: 0 }}>
+                      {!items ? (
+                        <>
+                          <li className>
+                            <Link
+                              to="/dang-nhap"
+                              title="Đổi Điểm Recyclable waste"
+                            >
+                              Đăng nhập
+                            </Link>
+                          </li>
+                          <li className>
+                            <Link to="/dang-nhap" title="CÁCH THỨC ĐỔI ĐIỂM">
+                              Đăng ký
+                            </Link>
+                          </li>
+                        </>
+                      ) : (
+                        <>
+                          <li className>
+                            <Link to="/gio-hang" title="CÁCH THỨC ĐỔI ĐIỂM">
+                              Giỏ hàng
+                            </Link>
+                          </li>
+                          <li className>
+                            <Link
+                              to="/uu-dai-doi-diem"
+                              title="CÁCH THỨC ĐỔI ĐIỂM"
+                            >
+                              Ưu đãi đổi điểm
+                            </Link>
+                          </li>
+                          <li className>
+                            <Link to="/history-buy" title="CÁCH THỨC ĐỔI ĐIỂM">
+                              Lịch sử mua hàng
+                            </Link>
+                          </li>
+                          <li className>
+                            <Link
+                              to="/history-exchange"
+                              title="CÁCH THỨC ĐỔI ĐIỂM"
+                            >
+                              Lịch sử đổi điểm
+                            </Link>
+                          </li>
+                          <li className>
+                            <Link
+                              to="#"
+                              title="CÁCH THỨC ĐỔI ĐIỂM"
+                              onClick={hanldeSignOut}
+                            >
+                              Đơn đã thanh toán
+                            </Link>
+                          </li>
+                          <li className>
+                            <Link
+                              to="/dang-nhap"
+                              title="CÁCH THỨC ĐỔI ĐIỂM"
+                              onClick={hanldeSignOut}
+                            >
+                              Đăng xuất
+                            </Link>
+                          </li>
+                        </>
+                      )}
+                    </ul>
+                  </li>
+                </ul>
+              </div>
+              {/* </i> */}
+
+              {/* </Link> */}
 
               <div className="box-menu-mobile">
                 <button
@@ -111,7 +206,8 @@ const Header = () => {
                           x1={1}
                           y1={1}
                           x2={13}
-                          y2={13} />
+                          y2={13}
+                        />
                         <line
                           fill="none"
                           stroke="#000"
@@ -119,7 +215,8 @@ const Header = () => {
                           x1={13}
                           y1={1}
                           x2={1}
-                          y2={13} />
+                          y2={13}
+                        />
                       </svg>
                     </button>
                     <div className="justify-content-md-center">
@@ -158,18 +255,10 @@ const Header = () => {
                             >
                               ĐỔI ĐIỂM RECYCLABLE WASTE
                             </a>
-                            <a
-                              className="dropdown-item"
-                              href="/"
-
-                            >
+                            <a className="dropdown-item" href="/">
                               CÁCH THỨC ĐỔI ĐIỂM
                             </a>
-                            <a
-                              className="dropdown-item"
-                              href="/"
-
-                            >
+                            <a className="dropdown-item" href="/">
                               ĐỊA ĐIỂM ĐỔI ĐIỂM
                             </a>
                           </div>
@@ -197,7 +286,8 @@ const Header = () => {
             </div>
           </div>
         </div>
-      </nav></>
+      </nav>
+    </>
   );
 };
 export default Header;

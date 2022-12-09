@@ -2,14 +2,32 @@ import { useEffect, useState } from "react";
 import { Link, useParams, useNavigate } from "react-router-dom";
 import axios from "../lib/axios";
 import OutLineBg from "../OutLineBg";
+import notFound from "../assets/images/NotFound.svg";
 
 const ExchangePoint = () => {
   const [active, setActive] = useState("steps-custom__item active");
+  const [categoryActive, setCategoryActive] = useState(0);
   const [products, setProducts] = useState([]);
+  const [categories, setCategories] = useState([]);
+  const [category, setCategory] = useState();
   const navigate = useNavigate();
-  const handleGetAllProducts = async () => {
-    const res = await axios.get("/products/get-all");
+  const handleSetCategory = async (id, index) => {
+    setCategoryActive(index);
+    const res = await axios.post("/products/get-by-category", {
+      categoryId: id,
+      byPoint: true,
+    });
     setProducts(res.data.products);
+  };
+
+  const handleGetAllProducts = async () => {
+    const res = await axios.get("/categories/get-all");
+    setCategories(res.data.categories);
+    handleSetCategory(res.data.categories[0]?._id, 0);
+  };
+
+  const handleGetProductByCategoy = async (id) => {
+    // cconst res = await axios.get
   };
 
   useEffect(() => {
@@ -293,114 +311,25 @@ const ExchangePoint = () => {
                       </p>
                       <div className="tag-custom">
                         <ul className="tag-custom__list">
-                          <li className="tag-custom__item">
-                            <a
-                              href="javascript:void(0)"
-                              className="tag-custom__link"
+                          {categories.map((category, index) => (
+                            <li
+                              className={`tag-custom__item ${
+                                categoryActive === index ? "active" : ""
+                              }`}
+                              onClick={() =>
+                                handleSetCategory(category._id, index)
+                              }
                             >
-                              <span className="tag-custom__name">
-                                Siêu Voucher Sinh Nhật
-                              </span>
-                            </a>
-                          </li>
-                          <li className="tag-custom__item">
-                            <a
-                              href="javascript:void(0)"
-                              className="tag-custom__link"
-                            >
-                              <span className="tag-custom__name">VIP</span>
-                            </a>
-                          </li>
-                          <li className="tag-custom__item">
-                            <a
-                              href="javascript:void(0)"
-                              className="tag-custom__link"
-                            >
-                              <span className="tag-custom__name">Đặt Chỗ</span>
-                            </a>
-                          </li>
-                          <li className="tag-custom__item">
-                            <a
-                              href="javascript:void(0)"
-                              className="tag-custom__link"
-                            >
-                              <span className="tag-custom__name">Mua sắm</span>
-                            </a>
-                          </li>
-                          <li className="tag-custom__item">
-                            <a
-                              href="javascript:void(0)"
-                              className="tag-custom__link"
-                            >
-                              <span className="tag-custom__name">Ẩm thực</span>
-                            </a>
-                          </li>
-                          <li className="tag-custom__item">
-                            <a
-                              href="javascript:void(0)"
-                              className="tag-custom__link"
-                            >
-                              <span className="tag-custom__name">
-                                Thời Trang
-                              </span>
-                            </a>
-                          </li>
-                          <li className="tag-custom__item">
-                            <a
-                              href="javascript:void(0)"
-                              className="tag-custom__link"
-                            >
-                              <span className="tag-custom__name">
-                                Du lịch - Khách sạn
-                              </span>
-                            </a>
-                          </li>
-                          <li className="tag-custom__item">
-                            <a
-                              href="javascript:void(0)"
-                              className="tag-custom__link"
-                            >
-                              <span className="tag-custom__name">
-                                Giao thông
-                              </span>
-                            </a>
-                          </li>
-                          <li className="tag-custom__item">
-                            <a
-                              href="javascript:void(0)"
-                              className="tag-custom__link"
-                            >
-                              <span className="tag-custom__name">
-                                Thể thao - Làm đẹp
-                              </span>
-                            </a>
-                          </li>
-                          <li className="tag-custom__item">
-                            <a
-                              href="javascript:void(0)"
-                              className="tag-custom__link"
-                            >
-                              <span className="tag-custom__name">Giáo dục</span>
-                            </a>
-                          </li>
-                          <li className="tag-custom__item">
-                            <a
-                              href="javascript:void(0)"
-                              className="tag-custom__link"
-                            >
-                              <span className="tag-custom__name">Giải trí</span>
-                            </a>
-                          </li>
-                          <li className="tag-custom__item active">
-                            <a
-                              href="javascript:void(0)"
-                              className="tag-custom__link"
-                            >
-                              <span className="tag-custom__name">
-                                Y tế - Bảo hiểm
-                              </span>
-                            </a>
-                          </li>
+                              <a
+                                href="javascript:void(0)"
+                                className="tag-custom__link"
+                              >
+                                <span className="tag-custom__name">
+                                  {category.name}
+                                </span>
+                              </a>
+                            </li>
+                          ))}
                         </ul>
                       </div>
                       {/* <div class="tag-custom tag-custom--sp">
@@ -421,7 +350,7 @@ const ExchangePoint = () => {
                         </select>
                      </div>
                   </div> */}
-                      <div className="sort-custom">
+                      {/* <div className="sort-custom">
                         <div className="sort-custom__info">
                           <span className="sort-custom__icon">
                             <i className="icon-sort" />
@@ -522,58 +451,67 @@ const ExchangePoint = () => {
                             </select>
                           </div>
                         </div>
-                      </div>
+                      </div> */}
                       <ul className="endow-link__list">
-                        {products.map((product) => (
-                          <li
-                            className="endow-link__item"
-                            onClick={() => navigate(`/${product._id}`)}
-                          >
-                            <span className="endow-link__label">5%</span>
-                            <div className="endow-link__images img-hover">
-                              <img src={product.imgProduct} alt="img" />
-                            </div>
-                            <div className="endow-link__detail">
-                              {/* <div className="endow-link__thumb">
+                        {products.length > 0 ? (
+                          products.map((product) => (
+                            <li
+                              className="endow-link__item"
+                              onClick={() => navigate(`/${product._id}`)}
+                            >
+                              <span className="endow-link__label">5%</span>
+                              <div className="endow-link__images img-hover">
+                                <img src={product.imgProduct} alt="img" />
+                              </div>
+                              <div className="endow-link__detail">
+                                {/* <div className="endow-link__thumb">
                                 <img
                                   src="https://quanlydoitac.viettel.vn/files/qldt/public/partner/logo/2022/6/7/4b94dcd8-928b-460a-b194-1908565f5b2e.jpg"
                                   alt="img"
                                 />
                               </div> */}
-                              <h5 className="endow-link__name">
-                                <a href="#" className="endow-link__name-href">
-                                  {product.name}
-                                </a>
-                              </h5>
-                              <div className="endow-link__date">
-                                <span className="endow-link__date-icon">
-                                  <i className="icon-time" />
-                                </span>
-                                {/* <span className="endow-link__date-value">
+                                <h5 className="endow-link__name">
+                                  <a href="#" className="endow-link__name-href">
+                                    {product.name}
+                                  </a>
+                                </h5>
+                                <div className="endow-link__date">
+                                  <span className="endow-link__date-icon">
+                                    <i className="icon-time" />
+                                  </span>
+                                  {/* <span className="endow-link__date-value">
                                   31/12/2024
                                 </span> */}
+                                </div>
+                                <div className="endow-link__point">
+                                  <span className="endow-link__point-icon">
+                                    <i className="icon-ticket" />
+                                  </span>
+                                  <span className="endow-link__point-value">
+                                    {product.price} điểm
+                                  </span>
+                                </div>
                               </div>
-                              <div className="endow-link__point">
-                                <span className="endow-link__point-icon">
-                                  <i className="icon-ticket" />
-                                </span>
-                                <span className="endow-link__point-value">
-                                  {product.price} điểm
-                                </span>
+                              <div className="action-hover">
+                                <div className="action-hover__btn">
+                                  <a
+                                    className="button-plus button-plus--transparent button-plus--small"
+                                    href="#"
+                                  >
+                                    Đổi Điểm Ngay
+                                  </a>
+                                </div>
                               </div>
+                            </li>
+                          ))
+                        ) : (
+                          <div>
+                            <img src={notFound} />
+                            <div style={{ textAlign: "center", fontSize: 40 }}>
+                              Không tìm thấy sản phẩm
                             </div>
-                            <div className="action-hover">
-                              <div className="action-hover__btn">
-                                <a
-                                  className="button-plus button-plus--transparent button-plus--small"
-                                  href="#"
-                                >
-                                  Đổi Điểm Ngay
-                                </a>
-                              </div>
-                            </div>
-                          </li>
-                        ))}
+                          </div>
+                        )}
                       </ul>
                       <div className="endow-link__btn">
                         <a

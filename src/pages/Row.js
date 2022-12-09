@@ -1,12 +1,12 @@
 import React, { useState } from "react";
 import axios from "../lib/axios";
 
-const Row = ({ order, setStatusClick, deleted }) => {
+const Row = ({ order, setStatusClick, deleted, price }) => {
   const [quantity, setQuantity] = useState(order.quantity);
 
   const handleAddQuantity = () => {
-    order
-  }
+    order;
+  };
 
   return (
     <tr>
@@ -21,28 +21,36 @@ const Row = ({ order, setStatusClick, deleted }) => {
           {order.idProduct.name}
         </a>
       </td>
-      <td>{order.idProduct.price} ĐIỂM</td>
+      <td>
+        {order.idProduct.price} {price ? "Đồng" : "ĐIỂM"}
+      </td>
       <td>
         <div className="form-group--number">
-          <button
-            className="minus"
-            onClick={() => setQuantity((prev) => prev - 1)}
-          >
-            <span>-</span>
-          </button>
+          {price && (
+            <button
+              className="minus"
+              onClick={() => setQuantity((prev) => prev - 1)}
+            >
+              <span>-</span>
+            </button>
+          )}
           <input className="form-control" type="text" value={quantity} />
-          <button
-            className="plus"
-            onClick={() => {
-              setStatusClick(true);
-              setQuantity((prev) => prev + 1);
-            }}
-          >
-            <span>+</span>
-          </button>
+          {price && (
+            <button
+              className="plus"
+              onClick={() => {
+                setStatusClick(true);
+                setQuantity((prev) => prev + 1);
+              }}
+            >
+              <span>+</span>
+            </button>
+          )}
         </div>
       </td>
-      <td>{quantity * Number(order.idProduct.price)} ĐIỂM</td>
+      <td>
+        {quantity * Number(order.idProduct.price)} {price ? "Đồng" : "ĐIỂM"}
+      </td>
       <td>
         <div className="ps-remove" onClick={() => deleted(order._id)} />
       </td>

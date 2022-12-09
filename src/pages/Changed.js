@@ -1,29 +1,17 @@
 import { useEffect, useState } from "react";
 import axios from "../lib/axios";
-import { notifyError, notifySuccess } from "../lib/notify";
-import "react-toastify/dist/ReactToastify.css";
 import OutLineBg from "../OutLineBg";
 import Row from "./Row";
 
-const Buyed = () => {
+const Changed = () => {
   const [orders, setOrders] = useState([]);
   const [total, setTotal] = useState(0);
   const handleGetAllCart = async () => {
     const items = JSON.parse(localStorage.getItem("items"));
-    const res = await axios.post(`/order/order-ispay`, {
+    const res = await axios.post(`/order/order-point-accept`, {
       id: items._id,
     });
     setOrders(res.data.orders);
-  };
-
-  const handleDelete = async (id) => {
-    try {
-      const res = await axios.delete(`/order/${id}`);
-      notifySuccess("Xoá sản phẩm ra khỏi giỏ hàng thành công");
-      handleGetAllCart();
-    } catch (error) {
-      notifyError("Xóa sản phẩm ra khỏi giỏ hàng thất bại");
-    }
   };
 
   useEffect(() => {
@@ -40,7 +28,7 @@ const Buyed = () => {
                 <table className="table ps-cart__table">
                   <thead>
                     <tr>
-                      <th>sản phẩm</th>
+                      <th>Ữu Đãi Đã Đổi</th>
                       <th>Giá</th>
                       <th>Số Lượng</th>
                       <th>Tổng</th>
@@ -52,29 +40,40 @@ const Buyed = () => {
                       <tr>
                         <td>
                           <a className="ps-product__preview" href="/">
-                            <img className="mr-15" src={order.imgProduct} alt />{" "}
-                            {order.name}
+                            <img
+                              style={{ width: 70, height: 70 }}
+                              className="mr-15"
+                              src={order.idProduct.imgProduct}
+                              alt
+                            />{" "}
+                            {order.idProduct.name}
                           </a>
                         </td>
-                        <td>$150</td>
+                        <td>{order.idProduct.price} ĐIỂM</td>
                         <td>
                           <div className="form-group--number">
                             <input
                               className="form-control"
                               type="text"
-                              defaultValue={2}
+                              value={order.quantity}
                             />
                           </div>
                         </td>
-                        <td>$300</td>
                         <td>
-                          <div className="ps-remove" onClick={()=>handleDelete(order._id)}/>
+                          {Number(order.idProduct.price) *
+                            Number(order.quantity)}{" "}
+                          ĐIỂM
+                        </td>
+                        <td>
+                          <div className="ps-remove" />
                         </td>
                       </tr>
                     ))}
                   </tbody>
                 </table>
-                <div className="ps-cart__actions"></div>
+                <div className="ps-cart__actions">
+                  <div className="ps-cart__promotion"></div>
+                </div>
               </div>
             </div>
           </div>
@@ -83,4 +82,4 @@ const Buyed = () => {
     </>
   );
 };
-export default Buyed;
+export default Changed;

@@ -4,56 +4,35 @@ import OutLineBg from "../OutLineBg";
 import Row from "./Row";
 import { ToastContainer, toast } from "react-toastify";
 
-const Cart = () => {
+const CartPrice = () => {
   const [orders, setOrders] = useState([]);
   const [statusClick, setStatusClick] = useState(false);
   const [point, setPoint] = useState(0);
-  //   const handleGetPrice = async () => {
-  //     const items = JSON.parse(localStorage.getItem("items"));
-  //     const res = await axios.post("/users/price", {
-  //       id: items._id,
-  //     });
-
-  //     setPoint(res.data.point);
-  //   };
   const items = JSON.parse(localStorage.getItem("items"));
-  const handleGetPrice = async () => {
-    const res = await axios.post("/users/price", {
-      id: items._id,
-    });
 
-    setPoint(res.data.point);
-  };
   const notifyError = (msg) => toast.error(msg);
   const notifySuccess = (msg) => toast.success(msg);
 
   const handleGetAllCart = async () => {
     const items = JSON.parse(localStorage.getItem("items"));
-    const res = await axios.post(`/order/order-by-point`, {
-      id: items._id,
-    });
+    const res = await axios.get(`/order/${items._id}`);
     setOrders(res.data.orders);
-    handleGetPrice();
   };
 
   const handleBuy = async (id) => {
-    if (Number(point) < Number(showPoint())) {
-      return notifyError("Bạn không đủ điểm để thanh toán!");
-    }
     try {
       orders.map(async (order) => {
-        await axios.post("/order/isPay", {
+        const res = await axios.post("/order/isPay", {
           id: order._id,
         });
       });
-      await axios.post("/users/decrement-point", {
+      await axios.post("/users/add-point", {
         id: items._id,
-        point: showPoint(),
+        point: 100,
       });
+      notifySuccess("Mua hàng thành công, Vui lòng chờ xác nhận");
+      notifySuccess("Bạn được cộng 100 điểm");
       handleGetAllCart();
-      notifySuccess(
-        "Cảm ơn bạn đã góp phần làm thế giới sạch hơn, Vui lòng đợi xác nhận"
-      );
     } catch (error) {
       notifyError("Mua hàng thất bại");
     }
@@ -100,7 +79,6 @@ const Cart = () => {
           <div className="ps-content pt-80 pb-80">
             <div className="ps-container">
               <div className="ps-cart-listing">
-                BẠN CÓ {point} ĐIỂM
                 <table className="table ps-cart__table">
                   <thead>
                     <tr>
@@ -118,11 +96,12 @@ const Cart = () => {
                         order={order}
                         setStatusClick={() => setStatusClick(true)}
                         deleted={handleDelete}
-                        price={false}
+                        price={true}
                       />
                     ))}
                   </tbody>
                 </table>
+
                 <div className="ps-cart__actions">
                   <div className="ps-cart__promotion">
                     <div className="form-group">
@@ -146,7 +125,7 @@ const Cart = () => {
                       Tổng giá:{" "}
                       <span>
                         {" "}
-                        {showPoint() || (statusClick && showPoint())} Điểm
+                        {showPoint() || (statusClick && showPoint())} Đồng
                       </span>
                     </h3>
                     <a className="ps-btn" onClick={handleBuy}>
@@ -163,4 +142,4 @@ const Cart = () => {
     </>
   );
 };
-export default Cart;
+export default CartPrice;

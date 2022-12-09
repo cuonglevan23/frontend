@@ -5,7 +5,8 @@ import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import "../assets/login.css";
 import { useNavigate } from "react-router-dom";
-
+import CircularProgress from "@mui/material/CircularProgress";
+import { imageUpload } from "../utils/ImageUpload";
 const Login = () => {
   const navigate = useNavigate();
 
@@ -22,7 +23,8 @@ const Login = () => {
   const [phoneErr, setPhoneErr] = useState(false);
   const [emailErr, setEmailErr] = useState(false);
   const [items, setItems] = useState([]);
-
+  const [isLoading, setIsLoading] = useState();
+  const [imagePreview, setImagePreview] = useState();
   const [emailLog, setEmailLog] = useState("");
   const [passLog, setPassLog] = useState("");
   const [emailLogErr, setEmailLogErr] = useState(false);
@@ -50,8 +52,6 @@ const Login = () => {
 
     if (fNameErr || lNameErr || passErr || phoneErr || emailErr) return;
 
-    console.log(fNameErr);
-
     if (password !== checkPass) return setIsMatch(false);
 
     try {
@@ -61,6 +61,7 @@ const Login = () => {
         email,
         password,
         phoneNumber,
+        avatar: imagePreview,
       });
       notifySuccess("Đăng ký người dùng mới thành công");
       setEmail("");
@@ -71,6 +72,15 @@ const Login = () => {
     } catch (error) {
       notifyError(error.response.data.msg);
     }
+  };
+
+  const handleUploadImage = async (file) => {
+    setIsLoading(true);
+    await new Promise(async () => {
+      const image = await imageUpload(file);
+      setImagePreview(image);
+      setIsLoading(false);
+    });
   };
 
   const handleLogin = async () => {
@@ -236,6 +246,7 @@ const Login = () => {
                           </div>
                         )}
                       </div>
+
                       <div className="d-flex flex-wrap justify-content-between">
                         <div className="custom-control custom-checkbox">
                           <input
@@ -410,6 +421,32 @@ const Login = () => {
                           {!isMatch ? "Mật khẩu không trùng khớp!" : null}
                         </div>
                       </div>
+                    </div>
+                    <div className="col-sm-6">
+                      <div className="form-group">
+                        <label htmlFor="reg-fn">Ảnh</label>
+                        <input
+                          className="form-control"
+                          type="file"
+                          required
+                          id="reg-fn"
+                          onChange={(e) => {
+                            handleUploadImage(e.target.files[0]);
+                          }}
+                        />
+                        {fNameErr && (
+                          <div className="invalid-feedback">
+                            Vui lòng nhập tên!
+                          </div>
+                        )}
+                      </div>
+                    </div>
+                    <div className="col-sm-6">
+                      {isLoading ? (
+                        <CircularProgress color="success" />
+                      ) : (
+                        imagePreview && <img src={imagePreview} />
+                      )}
                     </div>
                   </div>
                   <div className="text-right">
