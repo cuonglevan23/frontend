@@ -1,13 +1,22 @@
 import React, { useState } from "react";
 import axios from "../lib/axios";
 
-const Row = ({ order, setStatusClick, deleted, price }) => {
+const Row = ({ order, setStatusClick, deleted, price, getAll }) => {
   const [quantity, setQuantity] = useState(order.quantity);
 
-  const handleAddQuantity = () => {
-    order;
+  const handleAddQuantity = async () => {
+    await axios.post("/order/incre-quantity", {
+      id: order._id,
+    });
+    getAll();
   };
 
+  const handleDecreQuantity = async () => {
+    await axios.post("/order/decre-quantity", {
+      id: order._id,
+    });
+    getAll();
+  };
   return (
     <tr>
       <td>
@@ -29,7 +38,10 @@ const Row = ({ order, setStatusClick, deleted, price }) => {
           {price && (
             <button
               className="minus"
-              onClick={() => setQuantity((prev) => prev - 1)}
+              onClick={() => {
+                setQuantity((prev) => prev - 1);
+                handleDecreQuantity();
+              }}
             >
               <span>-</span>
             </button>
@@ -41,6 +53,7 @@ const Row = ({ order, setStatusClick, deleted, price }) => {
               onClick={() => {
                 setStatusClick(true);
                 setQuantity((prev) => prev + 1);
+                handleAddQuantity();
               }}
             >
               <span>+</span>

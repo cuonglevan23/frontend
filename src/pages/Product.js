@@ -228,7 +228,7 @@ const Product = () => {
                             }}
                             onClick={() => {
                               handleSelectCategory();
-                              handleSearchProductByName(option, "not");
+                             handleGetAllProduct()
                             }}
                           >
                             <div>Tất cả sản phẩm</div>

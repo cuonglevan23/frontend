@@ -138,15 +138,6 @@ const Header = () => {
                           </li>
                           <li className>
                             <Link
-                              to="#"
-                              title="CÁCH THỨC ĐỔI ĐIỂM"
-                              onClick={hanldeSignOut}
-                            >
-                              Đơn đã thanh toán
-                            </Link>
-                          </li>
-                          <li className>
-                            <Link
                               to="/dang-nhap"
                               title="CÁCH THỨC ĐỔI ĐIỂM"
                               onClick={hanldeSignOut}

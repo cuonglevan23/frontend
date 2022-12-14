@@ -3,14 +3,64 @@ import { Link, useParams, useNavigate } from "react-router-dom";
 import axios from "../lib/axios";
 import OutLineBg from "../OutLineBg";
 import notFound from "../assets/images/NotFound.svg";
+import hoivienTiemnang from "../assets/images/hoi-vien-tiem-nang.png";
+import hoivienThanThiet from "../assets/images/4535d2ce51a36c361dd7d8208fafc3644fd8b0c7.png";
+import hoivienBac from "../assets/images/hoi-vien-bac.png";
+import hoivienVang from "../assets/images/hoi-vien-vang.png";
+import hoivienKc from "../assets/images/hoi-vien-kim-cuong.png";
+import iconTiemnang from "../assets/images/icon-tiem-nang.png";
+import iconThanthiet from "../assets/images/icon-than-thiet.png";
+import iconBac from "../assets/images/icon-bac.png";
+import iconVang from "../assets/images/icon-vang.png";
+import iconKc from "../assets/images/icon-kim-cuong.png";
+import next from "../assets/images/next.png";
+import prev from "../assets/images/prev.png";
+import { ToastContainer, toast } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
+import { notifyError, notifySuccess } from "../lib/notify";
+
+const slideData = [
+  {
+    icon: iconTiemnang,
+    title: "Hội viên Tiềm năng",
+    image: hoivienTiemnang,
+  },
+  {
+    icon: iconThanthiet,
+    title: "Hội viên Thân thiết",
+    image: hoivienThanThiet,
+  },
+  {
+    icon: iconBac,
+    title: "Hội viên Bạc",
+    image: hoivienBac,
+  },
+  {
+    icon: iconVang,
+    title: "Hội viên Vàng",
+    image: hoivienVang,
+  },
+  {
+    icon: iconKc,
+    title: "Hội viên Kim Cuơng",
+    image: hoivienKc,
+  },
+];
 
 const ExchangePoint = () => {
   const [active, setActive] = useState("steps-custom__item active");
+  const [index, setIndex] = useState(0);
   const [categoryActive, setCategoryActive] = useState(0);
   const [products, setProducts] = useState([]);
   const [categories, setCategories] = useState([]);
   const [category, setCategory] = useState();
+  const [teleServices, setTeleServices] = useState([]);
+  const [currentTeleservice, setCurrentTeleService] = useState();
+  const [teleProduct, setTeleProduct] = useState([]);
+  const [teleProductSelected, setTeleProductSelected] = useState();
+  const [mLeft, setMLeft] = useState(0);
   const navigate = useNavigate();
+  const items = JSON.parse(localStorage.getItem("items"));
   const handleSetCategory = async (id, index) => {
     setCategoryActive(index);
     const res = await axios.post("/products/get-by-category", {
@@ -20,22 +70,58 @@ const ExchangePoint = () => {
     setProducts(res.data.products);
   };
 
+  const handleTransactionPoint = async () => {
+    const point =
+      teleProductSelected.price / Number(teleProductSelected.idServices.ratio);
+    if (Number(point) > Number(items.point)) {
+      return notifyError("Bạn không đủ điểm");
+    }
+    await axios.post("/users/decrement-point", {
+      id: items._id,
+      point: point,
+    });
+    notifySuccess("Đổi điểm thành công");
+  };
+
   const handleGetAllProducts = async () => {
     const res = await axios.get("/categories/get-all");
     setCategories(res.data.categories);
     handleSetCategory(res.data.categories[0]?._id, 0);
   };
 
-  const handleGetProductByCategoy = async (id) => {
-    // cconst res = await axios.get
+  const handleGetServices = async () => {
+    try {
+      const res = await axios.get("/tele-services/get-all");
+      setTeleServices(res.data.teles);
+    } catch (error) {
+      console.log(error);
+    }
+  };
+
+  const handleGetTeleProductbyServices = async (id) => {
+    try {
+      const res = await axios.post("tele-product/get-by-id-services", {
+        id,
+      });
+
+      setTeleProduct(res.data.teles);
+    } catch (error) {
+      console.log(error);
+    }
+  };
+
+  const handleSelectTeleProduct = async (tele) => {
+    setTeleProductSelected(tele);
   };
 
   useEffect(() => {
     handleGetAllProducts();
+    handleGetServices();
   }, []);
 
   return (
     <>
+      <ToastContainer />
       <OutLineBg>
         <div>
           <section className="box-baner">
@@ -49,93 +135,32 @@ const ExchangePoint = () => {
               <div className="benefit-member__content">
                 <div className="steps-custom">
                   <ul className="steps-custom__list">
-                    <li
-                      className={`steps-custom__item active ${
-                        active === "steps-custom__item active" ? "active" : ""
-                      }`}
-                      data-image="./img/doidiem/hoi-vien-tiem-nang.png"
-                    >
-                      <a
-                        href="javascript:void(0)"
-                        className="steps-custom__link"
+                    {slideData.map((slide, i) => (
+                      <li
+                        className={`steps-custom__item ${
+                          index >= i ? "active" : ""
+                        } `}
+                        data-image={hoivienTiemnang}
+                        onClick={() => setIndex(i)}
                       >
-                        <span className="steps-custom__icon">
-                          <img
-                            src="./img/doidiem/icon-tiem-nang.png"
-                            alt="img"
-                          />
-                        </span>
-                        <p className="steps-custom__name">Hội viên Tiềm năng</p>
-                      </a>
-                    </li>
-                    <li
-                      className="steps-custom__item"
-                      data-image="./img/doidiem/hoi-vien-than-thiet.png"
-                    >
-                      <a
-                        href="javascript:void(0)"
-                        className="steps-custom__link"
-                      >
-                        <span className="steps-custom__icon">
-                          <img
-                            src="./img/doidiem/icon-than-thiet.png"
-                            alt="img"
-                          />
-                        </span>
-                        <p className="steps-custom__name">
-                          Hội viên Thân thiết
-                        </p>
-                      </a>
-                    </li>
-                    <li
-                      className="steps-custom__item"
-                      data-image="./img/doidiem/hoi-vien-bac.png"
-                    >
-                      <a
-                        href="javascript:void(0)"
-                        className="steps-custom__link"
-                      >
-                        <span className="steps-custom__icon">
-                          <img src="./img/doidiem/icon-bac.png" alt="img" />
-                        </span>
-                        <p className="steps-custom__name">Hội viên Bạc</p>
-                      </a>
-                    </li>
-                    <li
-                      className="steps-custom__item"
-                      data-image="./img/doidiem/hoi-vien-vang.png"
-                    >
-                      <a
-                        href="javascript:void(0)"
-                        className="steps-custom__link"
-                      >
-                        <span className="steps-custom__icon">
-                          <img src="./img/doidiem/icon-vang.png" alt="img" />
-                        </span>
-                        <p className="steps-custom__name">Hội viên Vàng </p>
-                      </a>
-                    </li>
-                    <li
-                      className="steps-custom__item"
-                      data-image="./img/doidiem/hoi-vien-kim-cuong.png"
-                    >
-                      <a
-                        href="javascript:void(0)"
-                        className="steps-custom__link"
-                      >
-                        <span className="steps-custom__icon">
-                          <img
-                            src="./img/doidiem/icon-kim-cuong.png"
-                            alt="img"
-                          />
-                        </span>
-                        <p className="steps-custom__name">Hội viên Kim Cương</p>
-                      </a>
-                    </li>
+                        <a
+                          href="javascript:void(0)"
+                          className="steps-custom__link"
+                        >
+                          <span className="steps-custom__icon">
+                            <img src={slide.icon} alt="img" />
+                          </span>
+                          <p className="steps-custom__name">{slide.title}</p>
+                        </a>
+                      </li>
+                    ))}
                   </ul>
                 </div>
                 <div className="benefit-member__images">
-                  <img src="./img/doidiem/hoi-vien-tiem-nang.png" alt="img" />
+                  {slideData.map(
+                    (slide, i) =>
+                      index === i && <img src={slide.image} alt="img" />
+                  )}
                 </div>
               </div>
             </div>
@@ -147,158 +172,99 @@ const ExchangePoint = () => {
                   <h2 className="section-title">Ưu đãi viễn thông</h2>
                   <div className="endow-telecom__content">
                     <ul className="endow-telecom__list">
-                      <li className="endow-telecom__item">
-                        <div className="endow-telecom__images img-hover">
-                          <img src="./img/doidiem/cuoc-di-dong.png" alt="img" />
-                        </div>
-                        <div className="endow-telecom__detail">
-                          <div className="endow-telecom__info">
-                            <span className="endow-telecom__icon">
-                              <i className="fa fa-check" />
-                            </span>
-                            <h5 className="endow-telecom__name">
-                              <a href="#" className="endow-telecom__name-link">
-                                Cước Di Động
-                              </a>
-                            </h5>
+                      {teleServices.map((tele) => (
+                        <li
+                          className="endow-telecom__item"
+                          onClick={() => {
+                            handleGetTeleProductbyServices(tele?._id);
+                            setCurrentTeleService(tele);
+                            setTeleProductSelected();
+                          }}
+                        >
+                          <div className="endow-telecom__images img-hover">
+                            <img src={tele?.icon} alt="img" />
                           </div>
-                          <p className="endow-telecom__des">
-                            1.000 điểm lấy 1000đ tiền cước
-                          </p>
-                        </div>
-                        <div className="action-hover">
-                          <div className="action-hover__btn">
-                            <a
-                              className="button-plus button-plus--transparent button-plus--small"
-                              href="/TelecomOffers/TelecomOffersDetail?name=cuoc-di-dong"
-                            >
-                              Đổi Điểm Ngay
-                            </a>
-                          </div>
-                        </div>
-                      </li>
-                      <li className="endow-telecom__item">
-                        <div className="endow-telecom__images img-hover">
-                          <img src="./img/doidiem/cuoc-data.png" alt="img" />
-                        </div>
-                        <div className="endow-telecom__detail">
-                          <div className="endow-telecom__info">
-                            <span className="endow-telecom__icon">
-                              <i className="fa fa-check" />
-                            </span>
-                            <h5 className="endow-telecom__name">
-                              <a href="#" className="endow-telecom__name-link">
-                                Cước Data
-                              </a>
-                            </h5>
-                          </div>
-                          <p className="endow-telecom__des">
-                            1.000 điểm lấy 100MB/tháng
-                          </p>
-                        </div>
-                        <div className="action-hover">
-                          <div className="action-hover__btn">
-                            <a
-                              className="button-plus button-plus--transparent button-plus--small"
-                              href="/TelecomOffers/TelecomOffersDetail?name=data"
-                            >
-                              Đổi Điểm Ngay
-                            </a>
-                          </div>
-                        </div>
-                      </li>
-                      <li className="endow-telecom__item">
-                        <div className="endow-telecom__images img-hover">
-                          <img src="./img/doidiem/phut-goi.png" alt="img" />
-                        </div>
-                        <div className="endow-telecom__detail">
-                          <div className="endow-telecom__info">
-                            <span className="endow-telecom__icon">
-                              <i className="fa fa-check" />
-                            </span>
-                            <h5 className="endow-telecom__name">
-                              <a href="#" className="endow-telecom__name-link">
-                                Phút Gọi
-                              </a>
-                            </h5>
-                          </div>
-                          <p className="endow-telecom__des">
-                            1.000 điểm lấy 10 phút gọi
-                          </p>
-                        </div>
-                        <div className="action-hover">
-                          <div className="action-hover__btn">
-                            <a
-                              className="button-plus button-plus--transparent button-plus--small"
-                              href="/TelecomOffers/TelecomOffersDetail?name=phut-goi"
-                            >
-                              Đổi Điểm Ngay
-                            </a>
-                          </div>
-                        </div>
-                      </li>
-                      <li className="endow-telecom__item">
-                        <div className="endow-telecom__images img-hover">
-                          <img src="./img/doidiem/sms.png" alt="img" />
-                        </div>
-                        <div className="endow-telecom__detail">
-                          <div className="endow-telecom__info">
-                            <span className="endow-telecom__icon">
-                              <i className="fa fa-check" />
-                            </span>
-                            <h5 className="endow-telecom__name">
-                              <a href="#" className="endow-telecom__name-link">
-                                SMS
-                              </a>
-                            </h5>
-                          </div>
-                          <p className="endow-telecom__des">
-                            1.000 điểm lấy 100 SMS
-                          </p>
-                        </div>
-                        <div className="action-hover">
-                          <div className="action-hover__btn">
-                            <a
-                              className="button-plus button-plus--transparent button-plus--small"
-                              href="/TelecomOffers/TelecomOffersDetail?name=sms"
-                            >
-                              Đổi Điểm Ngay
-                            </a>
-                          </div>
-                        </div>
-                      </li>
-                      <li className="endow-telecom__item">
-                        <div className="endow-telecom__images img-hover">
-                          <img src="./img/doidiem/goi-cuoc.png" alt="img" />
-                        </div>
-                        <div className="endow-telecom__detail">
-                          <div className="endow-telecom__info">
-                            <span className="endow-telecom__icon">
-                              <i className="fa fa-check" />
-                            </span>
-                            <h5 className="endow-telecom__name">
-                              <a href="#" className="endow-telecom__name-link">
-                                Gói Cước
-                              </a>
-                            </h5>
-                          </div>
-                          <p className="endow-telecom__des">
-                            Đăng ký gói cước bằng điểm Recyclable Waste
-                          </p>
-                        </div>
-                        <div className="action-hover">
-                          <div className="action-hover__btn">
-                            <a
-                              className="button-plus button-plus--transparent button-plus--small"
-                              href="/TelecomOffers/TelecomOffersDetail?name=doi-cuoc"
-                            >
-                              Đổi Điểm Ngay
-                            </a>
-                          </div>
-                        </div>
-                      </li>
+                        </li>
+                      ))}
                     </ul>
                   </div>
+
+                  {currentTeleservice && (
+                    <>
+                      <div class="telecom-box">
+                        <div class="telecom-box__exchange">
+                          <p class="telecom-box__exchange-value">
+                            <span>1.000</span> điểm =
+                            <span> {currentTeleservice?.ratio * 1000}</span>{" "}
+                            {currentTeleservice?.valueName}
+                          </p>
+                        </div>
+                        <ul class="telecom-box__list">
+                          <li class="telecom-box__item">
+                            <h5 class="telecom-box__sub">Thể lệ</h5>
+                            <div class="telecom-box__detail">
+                              <p class="telecom-box__des">
+                                <p>
+                                  <span style={{ fontSize: 14 }}>
+                                    <span
+                                      style={{
+                                        fontFamily:
+                                          "arial,helvetica,sans-serif",
+                                      }}
+                                    >
+                                      {currentTeleservice?.description}
+                                    </span>
+                                  </span>
+                                </p>
+                              </p>
+                            </div>
+                          </li>
+                        </ul>
+                      </div>
+
+                      <h2 className="section-title">Gói điểm quy đổi</h2>
+                      <div className="endow-telecom__content">
+                        <ul className="endow-telecom__list">
+                          {teleProduct.map((tele, index) => (
+                            <li
+                              className="endow-telecom__item"
+                              onClick={() => setTeleProductSelected(tele)}
+                              style={
+                                tele._id === teleProductSelected?._id
+                                  ? { border: "5px solid #007a33" }
+                                  : { margin: 0 }
+                              }
+                            >
+                              <div className="endow-telecom__images img-hover">
+                                <img src={tele.image} alt="img" />
+                              </div>
+                              <p className="endow-telecom__des">
+                                {tele.price / Number(tele.idServices.ratio)}{" "}
+                                Điểm
+                              </p>
+                            </li>
+                          ))}
+                        </ul>
+                        {teleProductSelected && (
+                          <div
+                            className="endow-link__btn"
+                            style={{ margin: 0 }}
+                          >
+                            <a
+                              href="javascript:void(0)"
+                              className="button-plus button-plus--primary"
+                              style={{ margin: 0 }}
+                              onClick={() => handleTransactionPoint()}
+                            >
+                              <i className="icon-load" />
+                              Xác nhận đổi điểm
+                            </a>
+                          </div>
+                        )}
+                      </div>
+                    </>
+                  )}
+
                   <div className="endow-link">
                     <h2 className="section-title">Ưu đãi liên kết</h2>
                     <div className="endow-link__content">
@@ -535,9 +501,31 @@ const ExchangePoint = () => {
               </h2>
               <div className="partners-viettel__content">
                 <div className="partners-viettel__detail">
-                  <div className="lists-slider slider">
-                    <ul class="partners-viettel__list owl-carousel">
-                      <li class="partners-viettel__item">
+                  <div
+                    className="lists-slider slider"
+                    style={{ position: "relative" }}
+                  >
+                    <img
+                      src={prev}
+                      style={{
+                        zIndex: 3,
+                        position: "absolute",
+                        top: "50%",
+                        left: 0,
+                        width: 30,
+                        height: 30,
+                        cursor: "pointer",
+                      }}
+                      onClick={() => setMLeft((prev) => prev + 200)}
+                    />
+                    <ul
+                      class="partners-viettel__list owl-carousel"
+                      style={{ overflow: "hidden" }}
+                    >
+                      <li
+                        class="partners-viettel__item"
+                        style={{ marginLeft: mLeft, transition: "0.5s" }}
+                      >
                         <div class="partners-viettel__thumb">
                           <img
                             src="https://quanlydoitac.viettel.vn/files/qldt/public/partner/logo/2022/4/14/a9c7b828-648d-421f-aed6-2a3d3eae35ef.jpg"
@@ -618,6 +606,19 @@ const ExchangePoint = () => {
                         </div>
                       </li>
                     </ul>
+                    <img
+                      src={next}
+                      style={{
+                        zIndex: 3,
+                        position: "absolute",
+                        top: "50%",
+                        right: 0,
+                        width: 30,
+                        height: 30,
+                        cursor: "pointer",
+                      }}
+                      onClick={() => setMLeft((prev) => prev - 200)}
+                    />
                   </div>
                 </div>
               </div>

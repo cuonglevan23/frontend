@@ -10,7 +10,7 @@ const Buyed = () => {
   const [total, setTotal] = useState(0);
   const handleGetAllCart = async () => {
     const items = JSON.parse(localStorage.getItem("items"));
-    const res = await axios.post(`/order/order-ispay`, {
+    const res = await axios.post(`/order/history`, {
       id: items._id,
     });
     setOrders(res.data.orders);
@@ -23,6 +23,48 @@ const Buyed = () => {
       handleGetAllCart();
     } catch (error) {
       notifyError("Xóa sản phẩm ra khỏi giỏ hàng thất bại");
+    }
+  };
+
+  const checkStatus = (status) => {
+    if (status === 0) {
+      return (
+        <div
+          style={{
+            backgroundColor: "yellow",
+            textAlign: "center",
+            width: "70%",
+          }}
+        >
+          Đang chờ xác nhận
+        </div>
+      );
+    } else if (status === 1) {
+      return (
+        <div
+          style={{
+            backgroundColor: "green",
+            textAlign: "center",
+            width: "70%",
+            color: "white",
+          }}
+        >
+          Đã xác nhận
+        </div>
+      );
+    } else if (status === 2) {
+      return (
+        <div
+          style={{
+            backgroundColor: "red",
+            textAlign: "center",
+            width: "70%",
+            color: "white",
+          }}
+        >
+          Đơn bị hủy
+        </div>
+      );
     }
   };
 
@@ -43,6 +85,7 @@ const Buyed = () => {
                       <th>sản phẩm</th>
                       <th>Giá</th>
                       <th>Số Lượng</th>
+                      <th>Trạng thái</th>
                       <th>Tổng</th>
                       <th />
                     </tr>
@@ -52,23 +95,41 @@ const Buyed = () => {
                       <tr>
                         <td>
                           <a className="ps-product__preview" href="/">
-                            <img className="mr-15" src={order.imgProduct} alt />{" "}
-                            {order.name}
+                            <img
+                              className="mr-15"
+                              src={order.idProduct.imgProduct}
+                              alt
+                              style={{ width: 70, height: 70 }}
+                            />{" "}
+                            {order.idProduct.name}
                           </a>
                         </td>
-                        <td>$150</td>
+                        <td>{order.idProduct.price} Đồng</td>
                         <td>
                           <div className="form-group--number">
                             <input
                               className="form-control"
                               type="text"
-                              defaultValue={2}
+                              value={order.quantity}
                             />
                           </div>
                         </td>
-                        <td>$300</td>
+                        <td>{checkStatus(order.isAccept)}</td>
                         <td>
-                          <div className="ps-remove" onClick={()=>handleDelete(order._id)}/>
+                          {Number(order.idProduct.price) *
+                            Number(order.quantity)}{" "}
+                          Đồng
+                        </td>
+                        <td>
+                          <div
+                            className="ps-remove"
+                            onClick={() => handleDelete(order._id)}
+                            style={
+                              order.isAccept === 0
+                                ? { zIndex: -1, opacity: 0.5 }
+                                : { zIndex: 2 }
+                            }
+                          />
                         </td>
                       </tr>
                     ))}

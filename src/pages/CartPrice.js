@@ -3,6 +3,7 @@ import axios from "../lib/axios";
 import OutLineBg from "../OutLineBg";
 import Row from "./Row";
 import { ToastContainer, toast } from "react-toastify";
+import { Link } from "react-router-dom";
 
 const CartPrice = () => {
   const [orders, setOrders] = useState([]);
@@ -17,25 +18,6 @@ const CartPrice = () => {
     const items = JSON.parse(localStorage.getItem("items"));
     const res = await axios.get(`/order/${items._id}`);
     setOrders(res.data.orders);
-  };
-
-  const handleBuy = async (id) => {
-    try {
-      orders.map(async (order) => {
-        const res = await axios.post("/order/isPay", {
-          id: order._id,
-        });
-      });
-      await axios.post("/users/add-point", {
-        id: items._id,
-        point: 100,
-      });
-      notifySuccess("Mua hàng thành công, Vui lòng chờ xác nhận");
-      notifySuccess("Bạn được cộng 100 điểm");
-      handleGetAllCart();
-    } catch (error) {
-      notifyError("Mua hàng thất bại");
-    }
   };
 
   const handleDelete = async (id) => {
@@ -97,6 +79,7 @@ const CartPrice = () => {
                         setStatusClick={() => setStatusClick(true)}
                         deleted={handleDelete}
                         price={true}
+                        getAll={handleGetAllCart}
                       />
                     ))}
                   </tbody>
@@ -128,10 +111,10 @@ const CartPrice = () => {
                         {showPoint() || (statusClick && showPoint())} Đồng
                       </span>
                     </h3>
-                    <a className="ps-btn" onClick={handleBuy}>
+                    <Link to="/dat-hang" className="ps-btn">
                       Process to checkout
                       <i className="ps-icon-next" />
-                    </a>
+                    </Link>
                   </div>
                 </div>
               </div>

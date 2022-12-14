@@ -16,12 +16,14 @@ const Login = () => {
   const [checkPass, setCheckPass] = useState("");
   const [phoneNumber, setPhoneNumber] = useState("");
   const [email, setEmail] = useState("");
+  const [address, setAddress] = useState("");
   const [isMatch, setIsMatch] = useState(true);
   const [fNameErr, setFNameErr] = useState(false);
   const [lNameErr, setLNameErr] = useState(false);
   const [passErr, setPassErr] = useState(false);
   const [phoneErr, setPhoneErr] = useState(false);
   const [emailErr, setEmailErr] = useState(false);
+  const [addressErr, setAddressErr] = useState(false);
   const [items, setItems] = useState([]);
   const [isLoading, setIsLoading] = useState();
   const [imagePreview, setImagePreview] = useState();
@@ -50,7 +52,8 @@ const Login = () => {
       setPhoneErr(true);
     }
 
-    if (fNameErr || lNameErr || passErr || phoneErr || emailErr) return;
+    if (fNameErr || lNameErr || passErr || phoneErr || emailErr)
+      return notifyError("Vui lòng nhập tất cả các trường");
 
     if (password !== checkPass) return setIsMatch(false);
 
@@ -61,6 +64,7 @@ const Login = () => {
         email,
         password,
         phoneNumber,
+        address,
         avatar: imagePreview,
       });
       notifySuccess("Đăng ký người dùng mới thành công");
@@ -378,6 +382,23 @@ const Login = () => {
                         {phoneErr && (
                           <div className="invalid-feedback">
                             Vui lòng nhập số điện thoại!
+                          </div>
+                        )}
+                      </div>
+                    </div>
+                    <div className="col-sm-6">
+                      <div className="form-group">
+                        <label htmlFor="reg-password-confirm">Địa chỉ</label>
+                        <input
+                          className="form-control"
+                          type="text"
+                          required
+                          value={address}
+                          onChange={(e) => setAddress(e.target.value)}
+                        />
+                        {addressErr && (
+                          <div className="invalid-feedback">
+                            Vui lòng nhập địa chỉ
                           </div>
                         )}
                       </div>
