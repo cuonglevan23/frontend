@@ -5,7 +5,6 @@ import Introduction from "./pages/Introduction";
 import Contact from "./pages/Contact";
 import RedeemPoints from "./pages/RedeemPoints";
 import PoinAddress from "./pages/PointAddress";
-
 import ExchangePoint from "./pages/ExchangePoint";
 import Product from "./pages/Product";
 import TelecomOffersDetail from "./pages/TelecomOffersDetail";
@@ -15,6 +14,10 @@ import Productdetail from "./pages/Product-detail";
 import Userprofile from "./pages/Userprofile";
 import Cart from "./pages/Cart";
 import Checkout from "./pages/CheckOut";
+import Buyed from "./pages/Buyed";
+import PointOrProduct from "./pages/PointOrProduct";
+import CartPrice from "./pages/CartPrice";
+import Changed from "./pages/Changed";
 
 export default function Router() {
   return useRoutes([
@@ -32,49 +35,65 @@ export default function Router() {
     },
     {
       path: "/doi-diem",
-      element: <ExchangePoint />
+      element: <ExchangePoint />,
     },
     {
       path: "/cach-thuc-doi-diem",
-      element: < RedeemPoints />,
+      element: <RedeemPoints />,
     },
     {
       path: "/dia-diem-doi-diem",
-      element: < PoinAddress />,
+      element: <PoinAddress />,
     },
-
+    
     {
       path: "/dang-nhap",
-      element: <Login />
+      element: <Login />,
     },
 
     {
       path: "/san-pham",
-      element: <Product />
+      element: <Product />,
     },
     {
       path: "/uu-dai-vien-thong",
-      element: <TelecomOffersDetail />
+      element: <TelecomOffersDetail />,
     },
     {
       path: "/chi-tiet-doi-diem",
-      element: <Pointdetail />
+      element: <Pointdetail />,
     },
     {
       path: "/chi-tiet-san-pham",
-      element: <Productdetail />
+      element: <Productdetail />,
+    },
+    {
+      path: "/:id",
+      element: <PointOrProduct />,
     },
     {
       path: "/nguoi-dung",
-      element: <Userprofile />
+      element: <Userprofile />,
     },
     {
       path: "/gio-hang",
-      element: <Cart />
+      element: <CartPrice />,
+    },
+    {
+      path: "/uu-dai-doi-diem",
+      element: <Cart />,
+    },
+    {
+      path: "/history-buy",
+      element: <Buyed />,
+    },
+    {
+      path: "/history-exchange",
+      element: <Changed />,
     },
     {
       path: "/dat-hang",
-      element: <Checkout />
+      element: <Checkout />,
     },
 
     { path: "*", element: <Navigate to="/404" replace /> },
