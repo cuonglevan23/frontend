@@ -47,6 +47,38 @@ const slideData = [
   },
 ];
 
+const questionArray = [
+  {
+    question: "Chu kỳ đạt hạng của khách hàng là bao lâu?",
+    answer:
+      "Thông thường chu kỳ đạt hạng của khách hàng là 12 tháng kể từ thời điểm đạt hạng. Tuy nhiên hàng tháng hệ thống đều xét hạng lại cho các thuê bao, nếu thuê bao có phát sinh điểm xét hạng đạt hạng mới cao hơn hạng cũ, khách hàng sẽ được lên hạng ngay mà không cần chờ chu kỳ sau 12 tháng.",
+  },
+  {
+    question:
+      "Khách hàng A sử dụng hai thuê bao. Thuê bao 1 đạt hạng Vàng có 100.000 điểm xét hạng và thuê bao 2 đạt hạng Bạc có 60.000 điểm. Sau khi gộp nhóm khách hàng A sẽ đạt hạng gì?",
+    answer:
+      "Sau khi gộp nhóm thuê bao 1 và 2, khách hàng A có 160.000 điểm xét hạng và sẽ đạt hạng Kim Cương.&nbsp;",
+  },
+  {
+    question:
+      "Khách hàng có được giữ nguyên hạng từ chương trình Viettel Privilege sang chương trình Viettel ++ hay không?",
+    answer:
+      "Khách hàng đang là hội viên Viettel Privilege sẽ giữ nguyên hạng hội viên hiện tại cho đến hết chu kỳ. Hàng tháng hệ thống xét hạng lại, nếu khách hàng đủ điều kiện lên hạng cao hơn sẽ được lên hạng ngay theo đúng thể lệ chương trình. Điểm quy đổi cũ của chương trình Viettel Privilege (nếu có) được quy đổi sang điểm tích lũy của chương trình Viettel++ mới theo tỷ lệ: 1 điểm chương trình Viettel Privilege = 20 điểm chương trình Viettel++.",
+  },
+  {
+    question:
+      "Khách hàng sử dụng dịch vụ di động A, đăng ký thêm 1 dịch vụ FTTH B với giá gói cước FTTH là 300.000đ/tháng và khách hàng đóng cước trước 1.000.000đ. Hỏi điểm tiêu dùng sẽ được tính như thế nào?",
+    answer:
+      "Thuê bao di động A được tích lũy 5% của 300.000đ tương đương với 15.000 điểm. Thuê bao cố định B được tích lũy 0.5% của 1.000.000đ tương đương với 5.000 điểm.&nbsp;",
+  },
+  {
+    question:
+      "Trường hợp thuê bao thành viên đã được gộp nhóm trước đó muốn tách khỏi nhóm có được không và phải làm như thế nào?",
+    answer:
+      "Thuê bao không tự tách ra khỏi nhóm được. Thuê bao chỉ tách nhóm đã gộp trước đó khi chuyển chủ quyền.&nbsp;",
+  },
+];
+
 const ExchangePoint = () => {
   const [active, setActive] = useState("steps-custom__item active");
   const [index, setIndex] = useState(0);
@@ -58,6 +90,7 @@ const ExchangePoint = () => {
   const [currentTeleservice, setCurrentTeleService] = useState();
   const [teleProduct, setTeleProduct] = useState([]);
   const [teleProductSelected, setTeleProductSelected] = useState();
+  const [questionOpen, setQuestionOpen] = useState([]);
   const [mLeft, setMLeft] = useState(0);
   const navigate = useNavigate();
   const items = JSON.parse(localStorage.getItem("items"));
@@ -68,6 +101,18 @@ const ExchangePoint = () => {
       byPoint: true,
     });
     setProducts(res.data.products);
+  };
+
+  const handleSetOpenTab = (index) => {
+    if (!questionOpen.includes(index)) {
+      setQuestionOpen((prev) => prev.concat(index));
+    } else {
+      let aray = [];
+      setQuestionOpen((prev) => {
+        aray = prev.filter((item) => item !== index);
+        return aray;
+      });
+    }
   };
 
   const handleTransactionPoint = async () => {
@@ -113,7 +158,7 @@ const ExchangePoint = () => {
   const handleSelectTeleProduct = async (tele) => {
     setTeleProductSelected(tele);
   };
-
+  console.log(questionOpen);
   useEffect(() => {
     handleGetAllProducts();
     handleGetServices();
@@ -636,172 +681,43 @@ const ExchangePoint = () => {
                 <h2 className="section-title">Câu hỏi thường gặp Viettel++</h2>
                 <div className="faq-plus__content">
                   <ul className="faq-plus__list">
-                    <li id="colapse-custom0" className="faq-plus__item">
-                      <div className="faq-plus__top">
-                        <h4 className="faq-plus__name">
-                          Chu kỳ đạt hạng của khách hàng là bao lâu?
-                        </h4>
-                        <span className="faq-plus__icon" />
-                      </div>
-                      <div
-                        id="colapse-result0"
-                        className="faq-plus__info"
-                        style={{ display: "none" }}
+                    {questionArray.map((arr, index) => (
+                      <li
+                        id="colapse-custom0"
+                        className="faq-plus__item"
+                        onClick={() => {
+                          handleSetOpenTab(index);
+                        }}
                       >
-                        <p className="faq-plus__des"></p>
-                        <p>
-                          <span style={{ fontSize: 14 }}>
-                            <span
-                              style={{
-                                fontFamily: "arial,helvetica,sans-serif",
-                              }}
-                            >
-                              Thông thường chu kỳ đạt hạng của khách hàng là 12
-                              tháng kể từ thời điểm đạt hạng. Tuy nhiên hàng
-                              tháng hệ thống đều xét hạng lại cho các thuê bao,
-                              nếu thuê bao có phát sinh điểm xét hạng đạt hạng
-                              mới cao hơn hạng cũ, khách hàng sẽ được lên hạng
-                              ngay mà không cần chờ chu kỳ sau 12 tháng.
+                        <div className="faq-plus__top">
+                          <h4 className="faq-plus__name">{arr.question}</h4>
+                          <span className="faq-plus__icon" />
+                        </div>
+                        <div
+                          id="colapse-result0"
+                          className="faq-plus__info"
+                          style={
+                            questionOpen.includes(index)
+                              ? { display: "block" }
+                              : { display: "none" }
+                          }
+                        >
+                          <p className="faq-plus__des"></p>
+                          <p>
+                            <span style={{ fontSize: 14 }}>
+                              <span
+                                style={{
+                                  fontFamily: "arial,helvetica,sans-serif",
+                                }}
+                              >
+                                {arr.answer}
+                              </span>
                             </span>
-                          </span>
-                        </p>
-                        <p />
-                      </div>
-                    </li>
-                    <li id="colapse-custom1" className="faq-plus__item">
-                      <div className="faq-plus__top">
-                        <h4 className="faq-plus__name">
-                          Khách hàng A sử dụng hai thuê bao. Thuê bao 1 đạt hạng
-                          Vàng có 100.000 điểm xét hạng và thuê bao 2 đạt hạng
-                          Bạc có 60.000 điểm. Sau khi gộp nhóm khách hàng A sẽ
-                          đạt hạng gì?
-                        </h4>
-                        <span className="faq-plus__icon" />
-                      </div>
-                      <div
-                        id="colapse-result1"
-                        className="faq-plus__info"
-                        style={{ display: "none" }}
-                      >
-                        <p className="faq-plus__des"></p>
-                        <p>
-                          <span style={{ fontSize: 14 }}>
-                            <span
-                              style={{
-                                fontFamily: "arial,helvetica,sans-serif",
-                              }}
-                            >
-                              Sau khi gộp nhóm thuê bao 1 và 2, khách hàng A có
-                              160.000 điểm xét hạng và sẽ đạt hạng Kim
-                              Cương.&nbsp;
-                            </span>
-                          </span>
-                        </p>
-                        <p />
-                      </div>
-                    </li>
-                    <li id="colapse-custom2" className="faq-plus__item">
-                      <div className="faq-plus__top">
-                        <h4 className="faq-plus__name">
-                          Khách hàng có được giữ nguyên hạng từ chương trình
-                          Viettel Privilege sang chương trình Viettel ++ hay
-                          không?
-                        </h4>
-                        <span className="faq-plus__icon" />
-                      </div>
-                      <div
-                        id="colapse-result2"
-                        className="faq-plus__info"
-                        style={{ display: "none" }}
-                      >
-                        <p className="faq-plus__des"></p>
-                        <p>
-                          <span style={{ fontSize: 14 }}>
-                            <span
-                              style={{
-                                fontFamily: "arial,helvetica,sans-serif",
-                              }}
-                            >
-                              Khách hàng đang là hội viên Viettel Privilege sẽ
-                              giữ nguyên hạng hội viên hiện tại cho đến hết chu
-                              kỳ. Hàng tháng hệ thống xét hạng lại, nếu khách
-                              hàng đủ điều kiện lên hạng cao hơn sẽ được lên
-                              hạng ngay theo đúng thể lệ chương trình. Điểm quy
-                              đổi cũ của chương trình Viettel Privilege (nếu có)
-                              được quy đổi sang điểm tích lũy của chương trình
-                              Viettel++ mới theo tỷ lệ: 1 điểm chương trình
-                              Viettel Privilege = 20 điểm chương trình
-                              Viettel++.
-                            </span>
-                          </span>
-                        </p>
-                        <p />
-                      </div>
-                    </li>
-                    <li id="colapse-custom3" className="faq-plus__item">
-                      <div className="faq-plus__top">
-                        <h4 className="faq-plus__name">
-                          Khách hàng sử dụng dịch vụ di động A, đăng ký thêm 1
-                          dịch vụ FTTH B với giá gói cước FTTH là 300.000đ/tháng
-                          và khách hàng đóng cước trước 1.000.000đ. Hỏi điểm
-                          tiêu dùng sẽ được tính như thế nào?
-                        </h4>
-                        <span className="faq-plus__icon" />
-                      </div>
-                      <div
-                        id="colapse-result3"
-                        className="faq-plus__info"
-                        style={{ display: "none" }}
-                      >
-                        <p className="faq-plus__des"></p>
-                        <p>
-                          <span style={{ fontSize: 14 }}>
-                            <span
-                              style={{
-                                fontFamily: "arial,helvetica,sans-serif",
-                              }}
-                            >
-                              Thuê bao di động A được tích lũy 5% của 300.000đ
-                              tương đương với 15.000 điểm. Thuê bao cố định B
-                              được tích lũy 0.5% của 1.000.000đ tương đương với
-                              5.000 điểm.&nbsp;
-                            </span>
-                          </span>
-                        </p>
-                        <p />
-                      </div>
-                    </li>
-                    <li id="colapse-custom4" className="faq-plus__item">
-                      <div className="faq-plus__top">
-                        <h4 className="faq-plus__name">
-                          Trường hợp thuê bao thành viên đã được gộp nhóm trước
-                          đó muốn tách khỏi nhóm có được không và phải làm như
-                          thế nào?
-                        </h4>
-                        <span className="faq-plus__icon" />
-                      </div>
-                      <div
-                        id="colapse-result4"
-                        className="faq-plus__info"
-                        style={{ display: "none" }}
-                      >
-                        <p className="faq-plus__des"></p>
-                        <p>
-                          <span style={{ fontSize: 14 }}>
-                            <span
-                              style={{
-                                fontFamily: "arial,helvetica,sans-serif",
-                              }}
-                            >
-                              Thuê bao không tự tách ra khỏi nhóm được. Thuê bao
-                              chỉ tách nhóm đã gộp trước đó khi chuyển chủ
-                              quyền.&nbsp;
-                            </span>
-                          </span>
-                        </p>
-                        <p />
-                      </div>
-                    </li>
+                          </p>
+                          <p />
+                        </div>
+                      </li>
+                    ))}
                   </ul>
                 </div>
               </div>

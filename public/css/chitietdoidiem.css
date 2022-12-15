@@ -5918,7 +5918,7 @@ body {
 
 .faq-plus__info {
   border-top: 1px solid #e7e7e7;
-  display: none;
+  /* display: none; */
   margin: 0 0 20px;
   padding: 20px 30px 0;
 }
